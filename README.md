@@ -185,7 +185,7 @@ curl -d doc="the cat and the hat" -X POST http://127.0.0.1:5000/index
 curl -d doc="the cow says moo" -X POST http://127.0.0.1:5000/index
 ```
 ```
-curl -d "query=a cat ran away today" -X POST http://127.0.0.1:5000/search
+curl -d "query=a cat ran away" -X POST http://127.0.0.1:5000/search
 ```
 
 Should expect the return value to look similar to the following json:
