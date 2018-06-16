@@ -29,7 +29,7 @@ For the body use `x-www-formurlencoded`
 with 1 parameter called `doc`. It's value should be the document's text.
 
 
-**Notice -** As of now, there is no support of multiple indexes.
+**Notice:** As of now, there is no support of multiple indexes.
 
 ## Indexing Result
 If the indexing was successful, the result will be the docId.
@@ -172,7 +172,7 @@ invertedIndex.getTokenDocs(token)
     }
 }
 ```
-**Notice-** As of now, there is no support for knowing what's the token's location
+**Notice:** As of now, there is no support for knowing what's the token's location
 with in each document.
 
 ## Storage
