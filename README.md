@@ -6,18 +6,17 @@ my job interview
 - Clone the diagnosticSearch repository and all it's content to your
 machine
 - Open the terminal in the projects main directory and install the
-project dependencies by entering the following command
-     `npm i`
-- Open the default.json file located in the config directory and change
+project dependencies by entering the `npm i` command
+- Open the `default.json` file located in the `/config` directory and change
 the port value to one that is free on your machine
 
 # Run Server:
 open the terminal in the projects main directory and enter the
-following command `npm start`
+`npm start` command
 
 # Indexing Documents
 ## Using curl
-open your terminal and enter the following command
+open your terminal and enter the following command:
 
 ```
 curl -d "doc=the dish ran away with the spoon" -X POST http://127.0.0.1:5000/index
@@ -27,25 +26,25 @@ curl -d "doc=the dish ran away with the spoon" -X POST http://127.0.0.1:5000/ind
 POST http://localhost:5000/index
 
 For the body use `x-www-formurlencoded`
-with 1 parameter called `doc` and it's value will be the document text
+with 1 parameter called `doc`. It's value should be the document's text
 
 
-**- As of now, there is no support of multiple indexes.**
+**Notice -** As of now, there is no support of multiple indexes.
 
 ## Indexing Result
 If the indexing was successful, the result will be the docId.
 
 
 # Searching
-## Using curl
-open your terminal and enter the following command
+## Using cUrl
+open your terminal and enter the following command:
 
 ```
 curl -d "query=a cat ran away today" -X POST http://127.0.0.1:5000/search
 ```
 
-by default, only the 10 best results will return.
-you can query more results by adding the `amount` parameter to the
+By default, only the 10 best results will be returned.
+You can query more results by adding the `amount` parameter to the
 command like the following:
 ```
 curl -d "query=a cat ran away today&amount=20" -X POST http://127.0.0.1:5000/search
@@ -56,7 +55,7 @@ POST http://localhost:5000/search
 
 For the body use `x-www-formurlencoded`
 with 1 parameter called `query` and 1 optional parameter called `amount`
-their meanings are specified in the **Using Postman** section above.
+their meanings are specified in the **Using cUrl** section above.
 
 ## Search Result
 ```
@@ -116,8 +115,8 @@ scorers directory:
 - **numOfSharedTokens** - For each document finds the amount of shared
 tokens between that document and the query string.
 - **tf-idf** - This is an experimental scorer for this project.
-scores documents according to the well-known tf-idf algorithm **without**
-normalizating of the word vectors to unit vectors.
+This scores documents according to the well-known tf-idf algorithm.
+**Notice:** This module does not normalize the word vectors to unit vectors.
 
 You can config the engine to work with a different scorer by changing
 the  `scorer.path` config value to the path of the newly added
@@ -125,9 +124,9 @@ scorer file.
 While developing a new scorer, make sure you follow the design
 pattern used in the existing scorers-
 
-- **function input-** invertedIndex, queryTokensArray (with duplicates if
+- **function's input-** invertedIndex, queryTokensArray (with duplicates if
 they exist)
-- **function output-** a dictionary of <docId, score>
+- **function's output-** a dictionary of <docId, score>
 
 The inverted index has 1 relevant property and 1 relevant method -
 
