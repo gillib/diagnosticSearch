@@ -3,16 +3,16 @@ my job interview
 
 # Setup:
 - Install node.js version 10.4.0
-- copy the diagnosticSearch directory and all it's content to your
+- Clone the diagnosticSearch repository and all it's content to your
 machine
-- open the terminal in the diagnosticSearch directory and install the
+- Open the terminal in the projects main directory and install the
 project dependencies by entering the following command
      `npm i`
-- open the default.json file located in the config directory and change
+- Open the default.json file located in the config directory and change
 the port value to one that is free on your machine
 
 # Run Server:
-open the terminal in the diagnosticSearch directory and enter the
+open the terminal in the projects main directory and enter the
 following command `npm start`
 
 # Indexing Documents
