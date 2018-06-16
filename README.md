@@ -5,18 +5,18 @@ my job interview
 - Install node.js version 10.4.0
 - Clone the diagnosticSearch repository and all it's content to your
 machine
-- Open the terminal in the projects main directory and install the
-project dependencies by entering the `npm i` command
+- Open the terminal in the project's main directory and install the
+project's dependencies by entering the `npm i` command
 - Open the `default.json` file located in the `/config` directory and change
-the port value to one that is free on your machine
+the `port` value to one that is free on your machine
 
 # Run Server:
-- Open the terminal in the projects main directory and enter the
+- Open the terminal in the project's main directory and enter the
 `npm start` command
 
 # Indexing Documents
 ## Using cUrl
-open your terminal and enter the following command:
+Open your terminal and enter the following command:
 
 ```
 curl -d "doc=the dish ran away with the spoon" -X POST http://127.0.0.1:5000/index
@@ -26,7 +26,7 @@ curl -d "doc=the dish ran away with the spoon" -X POST http://127.0.0.1:5000/ind
 POST http://localhost:5000/index
 
 For the body use `x-www-formurlencoded`
-with 1 parameter called `doc`. It's value should be the document's text
+with 1 parameter called `doc`. It's value should be the document's text.
 
 
 **Notice -** As of now, there is no support of multiple indexes.
@@ -37,15 +37,15 @@ If the indexing was successful, the result will be the docId.
 
 # Searching
 ## Using cUrl
-open your terminal and enter the following command:
+Open your terminal and enter the following command:
 
 ```
 curl -d "query=a cat ran away today" -X POST http://127.0.0.1:5000/search
 ```
 
 By default, only the 10 best results will be returned.
-You can query more results by adding the `amount` parameter to the
-command like the following:
+You may query more results by adding the `amount` parameter to the
+command as the following example:
 ```
 curl -d "query=a cat ran away today&amount=20" -X POST http://127.0.0.1:5000/search
 ```
@@ -83,68 +83,85 @@ their meanings are specified in the **Using cUrl** section above.
 The tokenizer is used both by the indexer and searcher to split the
 indexed documents or query string into tokens.
 
-You are provided with 2 built in tokenizers which are located in the
+You are provided with 2 built-in tokenizers which are located in the
 tokenizers directory:
 
 - **regexSplit** - Splits the document into tokens by a regular expression.
 The regex should be specified in the config file (/config/defualt.json) under
 `tokenizer.config.split_regex`
-- **ngram** - Splits the document by a regular expression into tokens
-which are then split up into sub-tokens (grams) each equal to the
-`tokenizer.config.grams_size` configuration.
+- **ngram** - Splits the document by a regular expression (specified in
+the configuration under `tokenizer.config.split_regex`) into tokens
+which are then split up into sub-tokens (grams), each equal in length
+to the`tokenizer.config.grams_size` configuration value
 
 You can config the engine to work with a different tokenizer by changing
 the  `tokenizer.path` config value to the path of the newly added
 tokenizer file.
 You can also add custom keys to the `tokeziner.config` section.
-While developing a new tokenizer, make sure you follow the design
-pattern used in the existing tokenizers-
 
-- **function input-** document, config
-- **function output-** an array of all tokens (with duplicates if they
-exist)
+While developing a new tokenizer, make sure you follow the design
+pattern used in the existing tokenizers:
+
+```
+module.exports = tokenizer;
+
+function tokenizer(doc, config) {
+    const tokens = [];
+    // tokenizer logic
+    // make sure you filter out empty tokens ("")
+    return tokens; // it's ok if this array contains duplicates
+}
+```
 
 ## Scorers
 
 The scorers are used by the searcher to score each document in the index
 regarding it's similarity to the query string.
 
-You are provided with 2 built in scorers which are located in the
+You are provided with 2 built-in scorers which are located in the
 scorers directory:
 
-- **numOfSharedTokens** - For each document finds the amount of shared
-tokens between that document and the query string.
-- **tf-idf** - This is an experimental scorer for this project.
-This scores documents according to the well-known tf-idf algorithm.
-**Notice:** This module does not normalize the word vectors to unit vectors.
+- **numOfSharedTokens** - For each document, finds the amount of shared
+tokens with the query string
+- **tf-idf** - An experimental scorer for this project.
+Scores documents according to the well-known tf-idf algorithm.
+**Notice:** The tf-idf module in this project does not normalize the
+word vectors to unit vectors
 
 You can config the engine to work with a different scorer by changing
 the  `scorer.path` config value to the path of the newly added
 scorer file.
 While developing a new scorer, make sure you follow the design
-pattern used in the existing scorers-
+pattern used in the existing scorers:
 
-- **function's input-** invertedIndex, queryTokensArray (with duplicates if
-they exist)
-- **function's output-** a dictionary of <docId, score>
+```
+module.exports = scorer;
 
-The inverted index has 1 relevant property and 1 relevant method -
+// queryTokensArray (may contain duplicates if they exist in the query)
+// The function should return a dictionary of <docId, score>
+function scorer(invertedIndex, queryTokensArray) {
+    const scoredDocsIds = {};
+    // scoring logic
+    return scoredDocsIds;
+}
+```
+
+The `invertedIndex` object has 1 relevant property and 1 relevant method
+for you to use:
 
 **property**
 ```
-invertedIndex.totalDocCount
+invertedIndex.totalDocCount //The total amount of unique document ids in the index
 ```
-The total amount of unique document ids indexed
 
 **function**
 ```
+// This function recieves a token and searches the index for that token
 invertedIndex.getTokenDocs(token)
 ```
-This function gets a token.
-The function will search the index for that token and if succeeds it
-will return an object as the following:
 
 ```
+// if the token is found, the function returns an object as the following:
 {
     "docCount": <int>, //the number of documents containg the token)
     "docs": {
@@ -155,17 +172,17 @@ will return an object as the following:
     }
 }
 ```
-As of now, there is no support for knowing what's the token's location
+**Notice-** As of now, there is no support for knowing what's the token's location
 with in each document.
 
 ## Storage
-As of this stage, the storage mechanism is very simple and not scalable.
+As of this time, the storage mechanism is very simple and not scalable.
 When the engine starts, it loads the whole Document Storage and the
 whole Inverted Index Storage to memory.
-That will continue sitting in your machine's memory until you shut the
-engine down.
+That will continue living in your machine's memory until you shut down
+the search engine.
 
-Each time you index a new document, the whole 2 storage files are
+Each time you index new document, the whole 2 storage files are
 replaced by a new ones containing the documents and the inverted index.
 This obviously isn't efficient and would be one of the first things to
 change if I would continue developing this engine.
@@ -174,8 +191,8 @@ The storage locations are specified in the config file (config/defualt.json)
 under `docStore.path` and under `invertedIndex.store.path`
 
 # Testing
-Configure the engine to use the `numOfSharedTokens` scorer and split
-the document by spaces.
+Configure the engine to use the `numOfSharedTokens` scorer and configure
+the `regexSplit` tokenizer to split the document by spaces.
 
 Run the following commands:
 ```
@@ -213,5 +230,5 @@ Gil Bartsion
 
 Senior Software Developer and Team Leader
 
-For any quiestions or inquiries
+For any quiestions or inquiries:
 gillib@gmail.com
