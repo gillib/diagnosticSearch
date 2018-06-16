@@ -15,7 +15,7 @@ the port value to one that is free on your machine
 `npm start` command
 
 # Indexing Documents
-## Using curl
+## Using cUrl
 open your terminal and enter the following command:
 
 ```
