@@ -1,0 +1,23 @@
+{
+  "api": {
+    "port": 5000
+  },
+  "tokenizer": {
+    "path": "tokenizers/regexSplit",
+    "config": {
+      "split_regex": "(^|\\s)\\W|\\W(\\s|$)|\\s",
+      "grams_size": 3
+    }
+  },
+  "scorer": {
+    "path": "scorers/numOfSharedTokens"
+  },
+  "docStore": {
+    "path": "./storage/docs.store"
+  },
+  "invertedIndex": {
+    "store": {
+      "path": "./storage/invertedIndex.store"
+    }
+  }
+}
