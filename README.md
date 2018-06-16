@@ -11,7 +11,7 @@ project dependencies by entering the `npm i` command
 the port value to one that is free on your machine
 
 # Run Server:
-open the terminal in the projects main directory and enter the
+- Open the terminal in the projects main directory and enter the
 `npm start` command
 
 # Indexing Documents
