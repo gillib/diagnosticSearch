@@ -10,7 +10,7 @@
     }
   },
   "scorer": {
-    "path": "scorers/tf-idf"
+    "path": "scorers/numOfSharedTokens"
   },
   "docStore": {
     "path": "./storage/docs.store"
