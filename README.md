@@ -16,14 +16,14 @@ open the terminal in the diagnosticSearch directory and enter the
 following command `npm start`
 
 ### Indexing Documents
-###### Using curl
+#### Using curl
 open your terminal and enter the following command
 
 ```
 curl -d "doc=the dish ran away with the spoon" -X POST http://127.0.0.1:5000/index
 ```
 
-###### Using Postman
+#### Using Postman
 POST http://localhost:5000/index
 
 For the body use `x-www-formurlencoded`
@@ -32,12 +32,12 @@ with 1 parameter called `doc` and it's value will be the document text
 
 **- As of now, there is no support of multiple indexes.**
 
-###### Indexing Result
+#### Indexing Result
 If the indexing was successful, the result will be the docId.
 
 
 ### Searching
-###### Using curl
+#### Using curl
 open your terminal and enter the following command
 
 ```
@@ -51,14 +51,14 @@ command like the following:
 curl -d "query=a cat ran away today&amount=20" -X POST http://127.0.0.1:5000/search
 ```
 
-###### Using Postman
+#### Using Postman
 POST http://localhost:5000/search
 
 For the body use `x-www-formurlencoded`
 with 1 parameter called `query` and 1 optional parameter called `amount`
 their meanings are specified in the **Using Postman** section above.
 
-###### Search Result
+#### Search Result
 ```
 {
     "took": 4, // time in milliseconds
@@ -80,7 +80,7 @@ their meanings are specified in the **Using Postman** section above.
 ```
 
 ### Under The Hood
-###### Tokenizers
+#### Tokenizers
 The tokenizer is used both by the indexer and searcher to split the
 indexed documents or query string into tokens.
 
@@ -105,7 +105,7 @@ pattern used in the existing tokenizers-
 - **function output-** an array of all tokens (with duplicates if they
 exist)
 
-###### Scorers
+#### Scorers
 
 The scorers are used by the searcher to score each document in the index
 regarding it's similarity to the query string.
@@ -159,7 +159,7 @@ will return an object as the following:
 As of now, there is no support for knowing what's the token's location
 with in each document.
 
-###### Storage
+#### Storage
 As of this stage, the storage mechanism is very simple and not scalable.
 When the engine starts, it loads the whole Document Storage and the
 whole Inverted Index Storage to memory.
