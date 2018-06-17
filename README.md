@@ -62,7 +62,7 @@ their meanings are specified in the **Using cUrl** section above.
 {
     "took": 4, // time in milliseconds
     "query": "a cat ran away", // the query string
-    "total": 2, // amount of hits found
+    "total": 2, // total amount of hits (results) found
     "hits": [
         {
             "docId": "067e66bd-de40-4647-a9c6-65b441b08457",
@@ -189,6 +189,16 @@ change if I would continue developing this engine.
 
 The storage locations are specified in the config file (config/defualt.json)
 under `docStore.path` and under `invertedIndex.store.path`
+
+## Code Documentation
+The engine's core code (/core) is documented following the JSDoc
+patterns.
+
+Open the `/out/index.html` page in your browser in order to visualize
+the documentation
+
+Note that the Home page will be empty, but you can choose a Class on
+right side of the page.
 
 # Testing
 Configure the engine to use the `numOfSharedTokens` scorer and configure
